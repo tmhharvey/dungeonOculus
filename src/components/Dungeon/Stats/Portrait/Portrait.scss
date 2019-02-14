@@ -1,0 +1,12 @@
+.monsterCard {
+  background-color: white;
+  box-sizing: border-box;
+  height: 70%;
+  border-radius: 5px;
+  text-align: center;
+  border: 5px outset #b5651d;
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}

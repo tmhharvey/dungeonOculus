@@ -1,0 +1,30 @@
+.monsterInfo {
+  border-right: 2px solid #ccc;
+
+  &__portrait {
+    height: 40%;
+    position: relative;
+    border-bottom: solid 2px #ccc;
+  }
+
+  & h3 {
+    font-size: 2rem;
+    font-weight: bolder;
+    padding: 0.5rem;
+    border-bottom: solid 1px white;
+  }
+
+  & h4 {
+    font-size: 1.8rem;
+    font-weight: bolder;
+    padding: 0.5rem;
+    color: orange;
+    border-bottom: 4px ridge orange;
+  }
+
+  &__items {
+    font-size: 1.6rem;
+    font-weight: bold;
+    margin: 0.8rem 0;
+  }
+}

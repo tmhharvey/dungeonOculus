@@ -1,0 +1,33 @@
+.abilitySection {
+  box-sizing: border-box;
+  height: 100%;
+  border-radius: 5px;
+  text-align: center;
+  border-right: 2px solid #ccc;
+  &:last-child {
+    border: 0;
+  }
+
+  & h3 {
+    font-size: 2rem;
+    font-weight: bolder;
+    padding: 0.5rem;
+    border-bottom: solid 1px white;
+    color: white;
+  }
+
+  &__slots {
+    height: 7rem;
+    width: 7rem;
+    padding: 0.5rem 0.2rem;
+    margin: 1rem auto;
+    cursor: pointer;
+
+    background-color: #ccc;
+    border: outset 5px darken(#b5651d, 15%);
+    & img {
+      height: 90%;
+      height: 90%;
+    }
+  }
+}
