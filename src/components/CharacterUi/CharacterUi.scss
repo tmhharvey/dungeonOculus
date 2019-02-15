@@ -1,7 +1,13 @@
 .characterBar {
-  background-color: #b5651d;
+  background-image: linear-gradient(
+      to right bottom,
+      rgba(darken(grey, 35%), 0.95),
+      rgba(black, 0.95)
+    ),
+    url("../../assets/images/defaultBackground.jpg");
+  background-size: cover;
   height: 30%;
-  border: outset 5px darken(#b5651d, 15%);
+  border: outset 5px grey;
 
   &__sections {
     height: 100%;
@@ -14,5 +20,6 @@
   &__tips {
     font-size: 1.5rem;
     padding: 8rem 1rem 8rem 1rem;
+    color: #ccc;
   }
 }

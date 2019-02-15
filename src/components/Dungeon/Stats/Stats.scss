@@ -1,5 +1,5 @@
 .monsterInfo {
-  border-right: 2px solid #ccc;
+  border-right: 2px solid #2a2a2a;
 
   &__portrait {
     height: 40%;
@@ -25,6 +25,11 @@
   &__items {
     font-size: 1.6rem;
     font-weight: bold;
-    margin: 0.8rem 0;
+    margin: 1rem 0;
+    color: #e5e5e5;
+
+    i {
+      margin-right: 0.75rem;
+    }
   }
 }

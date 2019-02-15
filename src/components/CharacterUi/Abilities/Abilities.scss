@@ -3,7 +3,7 @@
   height: 100%;
   border-radius: 5px;
   text-align: center;
-  border-right: 2px solid #ccc;
+  border-right: 2px solid #2a2a2a;
   &:last-child {
     border: 0;
   }
@@ -17,14 +17,22 @@
   }
 
   &__slots {
-    height: 7rem;
-    width: 7rem;
+    height: 7.5rem;
+    width: 7.5rem;
     padding: 0.5rem 0.2rem;
     margin: 1rem auto;
     cursor: pointer;
-
     background-color: #ccc;
     border: outset 5px darken(#b5651d, 15%);
+    &:hover {
+      background-color: lighten(#ccc, 25%);
+    }
+    &:disabled {
+      background-color: #ac9980;
+      border: 1px solid #7e7365;
+      color: #ccc;
+      cursor: not-allowed;
+    }
     & img {
       height: 90%;
       height: 90%;

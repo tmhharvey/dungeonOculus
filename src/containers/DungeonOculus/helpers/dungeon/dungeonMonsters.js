@@ -1,6 +1,6 @@
-import AbilityCreation from "../../components/CharacterUi/Abilities/abilityHelpers";
-import lizardPortrait from "../../assets/images/lizardMonster.jpg";
-import banditPortrait from "../../assets/images/bandit.png";
+import AbilityCreation from "../../../../components/CharacterUi/Abilities/abilityHelpers";
+import lizardPortrait from "../../../../assets/images/lizardMonster.jpg";
+import banditPortrait from "../../../../assets/images/bandit.png";
 import DungeonHelpers from "./dungeonHelpers";
 
 var Strike = new AbilityCreation("Strike", "tooltip", 3, "Physical");
@@ -11,8 +11,8 @@ var DungeonMonsters = {
     {
       name: "Measle",
       class: "Scavenger",
-      health: 10,
-      attack: 2,
+      health: 20,
+      attack: 10,
       attackType: "Physical",
       defense: 3,
       defenseType: "Light",
@@ -27,8 +27,8 @@ var DungeonMonsters = {
     {
       name: "Ol' Blacktooth",
       class: "Bandit",
-      health: 8,
-      attack: 5,
+      health: 16,
+      attack: 8,
       attackType: "Piercing",
       defense: 2,
       defenseType: "Light",

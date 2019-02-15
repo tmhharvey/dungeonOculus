@@ -13,7 +13,7 @@
     border-bottom: solid 20px #ccc;
     overflow-y: scroll;
     padding: 1rem;
-    background-color: white;
+    background-color: darken(white, 5%);
 
     & p {
       font-size: 1.4rem;

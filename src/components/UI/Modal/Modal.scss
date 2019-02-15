@@ -1,0 +1,21 @@
+.Modal {
+  z-index: 500;
+  background-image: linear-gradient(
+      to right bottom,
+      rgba(black, 0.1),
+      rgba(black, 0.4)
+    ),
+    url("../../../assets/images/introBackground.jpg");
+  background-size: cover;
+
+  border: 2px outset #ffc300;
+  box-shadow: 1px 1px 1px black;
+  box-sizing: border-box;
+  transition: all 1s ease-out;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 75%;
+  width: 75%;
+}

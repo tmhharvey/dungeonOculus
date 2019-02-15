@@ -1,7 +1,13 @@
 .dungeonLayout {
   color: #fff;
   height: 65%;
-  background-color: #7e7e7e;
+  background-image: linear-gradient(
+      to right bottom,
+      rgba(darken(grey, 35%), 0.95),
+      rgba(black, 0.95)
+    ),
+    url("../../assets/images/defaultBackground.jpg");
+  background-size: cover;
 
   h3 {
     padding: 0.5rem;

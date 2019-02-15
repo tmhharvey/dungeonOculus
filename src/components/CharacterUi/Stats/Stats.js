@@ -8,25 +8,22 @@ const stats = props => (
         <h3>Character: {props.class}</h3>
       </div>
       <div className="col-sm-12">
-        <div className="characterStats__items text-center">
-          Health Points: <br />
+        <div className="characterStats__items text-left">
+          <i className="ra ra-health ra-1x" />
+          Health Points: &nbsp;
           <span className="characterStats__health">{props.health}</span>
         </div>
       </div>
-      <div className="col-sm-4">
+      <div className="col-sm-12">
         <div className="characterStats__items">
+          <i className="ra ra-dripping-sword ra-1x" />
           Attack: &nbsp;
           <span className="characterStats__attack"> {props.attack}</span>
         </div>
       </div>
-      <div className="col-sm-8">
+      <div className="col-sm-12">
         <div className="characterStats__items">
-          Attack Type: &nbsp;
-          <span className="characterStats__attackType">{props.attackType}</span>
-        </div>
-      </div>
-      <div className="col-sm-4">
-        <div className="characterStats__items">
+          <i className="ra ra-heavy-shield ra-1x" />
           Defense:
           <span className="characterStats__defense">
             {" "}
@@ -34,8 +31,9 @@ const stats = props => (
           </span>
         </div>
       </div>
-      <div className="col-sm-8">
-        <div className="characterStats__items">
+      <div className="col-sm-12">
+        <div className="characterStats__items text-left">
+          <i className="ra ra-level-three ra-1x" />
           Defense Type: &nbsp;
           <span className="characterStats__defenseType">
             {" "}

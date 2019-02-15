@@ -1,20 +1,17 @@
 class AbilityCreation {
-  constructor(abilityName, tooltip, damage, AttackType) {
+  constructor(abilityName, tooltip, damage, AttackType, healAmount) {
     this.abilityName = abilityName;
     this.tooltip = tooltip;
     this.damage = damage;
     this.AttackType = AttackType;
+    this.healAmount = healAmount;
   }
   useAbility(defenderDefType) {
     let damageMultiplier = this.damageMultiplierCheck(defenderDefType);
     let damageRangeCalc = Math.floor(Math.random() * this.damage) + this.damage;
 
     let damage = damageRangeCalc * damageMultiplier;
-    console.log("The base ability damage is: " + this.damage);
-    console.log("The calculated range damage is: " + damageRangeCalc);
     console.log(defenderDefType);
-    console.log("Damage Multiplier: " + damageMultiplier);
-    console.log("The returned damage is: " + damage);
     return damage;
   }
   damageMultiplierCheck(defenseType) {
@@ -70,6 +67,10 @@ class AbilityCreation {
 
     return damageMultiplier;
   }
+  // useAbilityHeal() {
+  //   let healAmount = this.healAmount;
+  //   return healAmount;
+  // }
 }
 
 export default AbilityCreation;

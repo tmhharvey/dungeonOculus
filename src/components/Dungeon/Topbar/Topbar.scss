@@ -1,13 +1,18 @@
 .dungeonTopbar {
   color: #fff;
   height: 5%;
-  background-color: #ccc;
+  background-image: linear-gradient(
+      to right bottom,
+      rgba(darken(grey, 40%), 0.85),
+      rgba(black, 0.85)
+    ),
+    url("../../../assets/images/defaultBackground.jpg");
+  background-size: cover;
   h3 {
-    padding: 0.5rem;
+    padding: 1rem;
     font-size: 2rem;
   }
 
   &__section {
-    border-right: 2px solid #fff;
   }
 }

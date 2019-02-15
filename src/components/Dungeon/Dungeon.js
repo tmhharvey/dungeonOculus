@@ -25,6 +25,11 @@ class Dungeon extends Component {
                 this.props.darkForestMonsters
               )
             }
+            dungeonEntered={this.props.dungeonEntered}
+            combatInitiated={this.props.combatInitiated}
+            combatOngoing={this.props.combatOngoing}
+            dungeonInitiated={this.props.dungeonInitiated}
+            abilitiesActive={this.props.abilitiesActive}
           />
 
           <Stats monster={this.props.monster} />

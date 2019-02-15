@@ -42,6 +42,9 @@ class CharacterUi extends Component {
             combat={this.props.combatHandler}
             damageCalc={this.props.damageCalculator}
             monster={this.props.monster}
+            disabled={!this.props.abilitiesActive}
+            playerTurn={this.props.playerTurn}
+            // healHandler={this.props.healHandler}
           />
           <div className="col-md-2 characterBar__tips">
             COMING SOON: <br />
