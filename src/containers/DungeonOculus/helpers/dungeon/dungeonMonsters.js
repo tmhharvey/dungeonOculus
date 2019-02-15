@@ -14,7 +14,7 @@ var DungeonMonsters = {
       {
         name: "Measle",
         class: "Scavenger",
-        health: 2,
+        health: 19,
         attack: 3,
         attackType: "Physical",
         defense: 3,
@@ -30,7 +30,7 @@ var DungeonMonsters = {
       {
         name: "Ol' Blacktooth",
         class: "Forest Creature",
-        health: 6,
+        health: 16,
         attack: 4,
         attackType: "Piercing",
         defense: 2,
@@ -48,11 +48,11 @@ var DungeonMonsters = {
       name: "Corrupted Ancient One",
       class: "Forest Spirit",
       boss: true,
-      health: 10,
+      health: 30,
       attack: 4,
       attackType: "Physical",
       defense: 4,
-      defenseType: "Heavy",
+      defenseType: "Light",
       portrait: corruptedAncientOne,
       ability: [
         {

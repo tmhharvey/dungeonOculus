@@ -23,6 +23,10 @@
 
       padding: 0.5rem;
       color: orangered;
+
+      @media (max-width: 1600px) {
+        font-size: 1.1rem;
+      }
     }
   }
 }

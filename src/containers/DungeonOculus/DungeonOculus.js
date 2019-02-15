@@ -26,8 +26,8 @@ class DungeonOculus extends Component {
       player: true,
       name: "Larothion",
       class: "Knight",
-      health: 20,
-      maxHealth: 20,
+      health: 25,
+      maxHealth: 25,
       attack: 3,
       attackType: "Physical",
       defense: 4,
@@ -37,10 +37,6 @@ class DungeonOculus extends Component {
         {
           trueAbility: Strike,
           abilityImage: "Strike"
-        },
-        {
-          trueAbility: Fireball,
-          abilityImage: "Fireball"
         },
         {
           trueAbility: Heal,
