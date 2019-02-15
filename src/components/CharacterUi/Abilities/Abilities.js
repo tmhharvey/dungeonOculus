@@ -1,10 +1,8 @@
 import React from "react";
 import "./Abilities.scss";
-
 import Strike from "../../../assets/images/Strike.png";
 import Fireball from "../../../assets/images/Fireball.png";
 import Heal from "../../../assets/images/HealingTransparent.png";
-import Backdrop from "../../UI/Backdrop/Backdrop";
 
 const abilities = props => {
   let abilityImageArray = [];
@@ -32,11 +30,10 @@ const abilities = props => {
           className="abilitySection__slots"
           disabled={props.disabled}
           onClick={() => {
-            props.combat(
+            props.charCombatHandler(
+              props.abilityArray[index].trueAbility,
               props.character,
-              props.monster,
-              props.damageCalc,
-              props.abilityArray[index].trueAbility
+              props.monster
             );
             // props.healHandler(
             //   props.abilityArray[index].trueAbility,

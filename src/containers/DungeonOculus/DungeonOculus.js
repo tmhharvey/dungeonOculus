@@ -1,24 +1,24 @@
 import React, { Component } from "react";
-
 import DungeonHelpers from "./helpers/dungeon/dungeonHelpers";
 import DungeonMonsters from "./helpers/dungeon/dungeonMonsters";
 import Dungeons from "./helpers/dungeon/dungeons";
-import AbilityCreation from "../../components/CharacterUi/Abilities/abilityHelpers";
 import Dungeon from "../../components/Dungeon/Dungeon";
-
 import CharacterUi from "../../components/CharacterUi/CharacterUi";
 import Combat from "../../components/Combat/Combat";
-
 import knightPortrait from "../../assets/images/knightTransparent.png";
 import lizardPortrait from "../../assets/images/lizardMonster.jpg";
 import banditPortrait from "../../assets/images/bandit.png";
 import dungeons from "./helpers/dungeon/dungeons";
 import Introduction from "../../components/CharacterUi/Introduction/Introduction";
 import Modal from "../../components/UI/Modal/Modal";
+import abilityActionHelper from "./helpers/abilityActionHelpers";
+import AbilityHelpers from "./helpers/abilities/abilityHelpers";
 
-var Strike = new AbilityCreation("Strike", "tooltip", 3, "Physical");
-var Fireball = new AbilityCreation("Fireball", "tooltip", 5, "Magic");
-var Heal = new AbilityCreation("Heal", "tooltip", 0, "Magic", "7");
+var Strike = new AbilityHelpers("Strike", "damage", "tooltip", 3, "Physical");
+var Fireball = new AbilityHelpers("Fireball", "damage", "tooltip", 5, "Magic");
+var Heal = new AbilityHelpers("Heal Potion", "heal", "tooltip", 0, "Magic", 7);
+
+console.log(Strike);
 
 class DungeonOculus extends Component {
   state = {
@@ -27,6 +27,7 @@ class DungeonOculus extends Component {
       name: "Larothion",
       class: "Knight",
       health: 20,
+      maxHealth: 20,
       attack: 3,
       attackType: "Physical",
       defense: 4,
@@ -40,6 +41,10 @@ class DungeonOculus extends Component {
         {
           trueAbility: Fireball,
           abilityImage: "Fireball"
+        },
+        {
+          trueAbility: Heal,
+          abilityImage: "Heal"
         }
       ]
     },
@@ -61,11 +66,12 @@ class DungeonOculus extends Component {
       ]
     },
     combatLog: ["Combat Has Not Initiated..."],
-    gameInitiated: true,
+    gameInitiated: false,
     dungeonInitiated: false,
     abilitiesActive: false,
     combatInitiated: false,
-    playerTurn: true
+    playerTurn: true,
+    forbiddenForestCleared: false
   };
 
   startGameHandler = () => {
@@ -77,6 +83,12 @@ class DungeonOculus extends Component {
   dungeonEnteredHandler = () => {
     this.setState({
       dungeonInitiated: true
+    });
+  };
+
+  dungeonClearedHandler = () => {
+    this.setState({
+      forbiddenForestCleared: true
     });
   };
 
@@ -92,198 +104,170 @@ class DungeonOculus extends Component {
     });
   };
 
-  dungeonSetupHandler = (selectedDungeon, monsterArray) => {
-    if (monsterArray.length <= 0) {
+  dungeonSetupHandler = (selectedDungeon, dungeonEncounters) => {
+    let encounters = dungeonEncounters.monsters;
+    let boss = dungeonEncounters.boss;
+    if (encounters.length <= 0) {
       let currentCombatLog = [...this.state.combatLog];
       let bossMessage = "You hear something behind you... Watch out!";
-      console.log(currentCombatLog);
+
       currentCombatLog.push(bossMessage);
 
       this.setState({
-        combatLog: currentCombatLog
-      });
-      return null;
-    }
-    var monsters = monsterArray;
-
-    var setMonster = selectedDungeon.monsterEncounterHandler(monsters);
-    console.log("=====");
-    console.log(setMonster);
-
-    this.setState({
-      monster: {
-        name: setMonster.name,
-        class: setMonster.class,
-        health: setMonster.health,
-        attack: setMonster.attack,
-        attackType: setMonster.attackType,
-        defense: setMonster.defense,
-        defenseType: setMonster.defenseType,
-        portrait: setMonster.portrait,
-        ability: setMonster.ability
-      }
-    });
-  };
-
-  damageCalculator(
-    charAbility,
-    defenderDefType,
-    attackerAttack,
-    defenderDefense
-  ) {
-    console.log(charAbility);
-    var totalDamage = charAbility.useAbility(defenderDefType) + attackerAttack;
-
-    var actualDamage = totalDamage - defenderDefense;
-
-    return Math.round(actualDamage);
-  }
-
-  // healingCalculator = (charAbility, character) => {
-  //   console.log(charAbility);
-  //   let updatedCharacter = character;
-  //   var healedAmount = charAbility.useAbilityHeal();
-  //   var oldCharacterHealth = character.health;
-  //   const updatedCharacterHealth = oldCharacterHealth + healedAmount;
-
-  //   let newCombatLog = [...this.state.combatLog];
-  //   let healingLog = (character.name =
-  //     " healed himself for " + healedAmount + "!");
-
-  //   newCombatLog.push(healingLog);
-
-  //   updatedCharacter.health = updatedCharacterHealth;
-  //   return this.SetState({
-  //     character: updatedCharacter,
-  //     combatLog: newCombatLog,
-  //     playerTurn: false
-  //   });
-  // };
-
-  charCombatHandler = (attacker, defender, damageCalc, attackerAbility) => {
-    let oldDefenderState = defender;
-    let activeAbility = attackerAbility;
-    let attackerAttack = attacker.attack;
-    let defenderDef = defender.defense;
-    let defenderDefType = defender.defenseType;
-    let defenderCurrentHealth = defender.health;
-    let combatLogCopy = [...this.state.combatLog];
-    let updatedCombatLog = "";
-    let combatLogText = "";
-
-    var trueDamage = damageCalc(
-      activeAbility,
-      defenderDefType,
-      attackerAttack,
-      defenderDef
-    );
-
-    combatLogText =
-      attacker.name +
-      " used " +
-      activeAbility.abilityName +
-      " and did " +
-      trueDamage +
-      " damage to " +
-      defender.name +
-      "!";
-    combatLogText.toString();
-    defenderCurrentHealth = defenderCurrentHealth - trueDamage;
-    oldDefenderState.health = defenderCurrentHealth;
-
-    combatLogCopy.push(combatLogText);
-
-    updatedCombatLog = combatLogCopy;
-
-    if (defenderCurrentHealth <= 0) {
-      let resetMonster = {
-        name: "",
-        class: "",
-        health: "",
-        attack: "",
-        attackType: "",
-        defense: "",
-        defenseType: "",
-        portrait: "",
-        ability: ""
-      };
-      let monsterDeathCombatLog =
-        defender.name +
-        "'s health has reached 0.  You've defeated " +
-        defender.name +
-        "!";
-      updatedCombatLog.push(monsterDeathCombatLog);
-
-      this.setState({
-        monster: resetMonster,
-        combatLog: updatedCombatLog,
-        combatInitiated: false,
-        abilitiesActive: false,
-        playerTurn: true
+        combatLog: currentCombatLog,
+        playerTurn: true,
+        monster: {
+          name: boss.name,
+          class: boss.class,
+          boss: true,
+          health: boss.health,
+          attack: boss.attack,
+          attackType: boss.attackType,
+          defense: boss.defense,
+          defenseType: boss.defenseType,
+          portrait: boss.portrait,
+          ability: boss.ability
+        }
       });
     } else {
+      var setMonster = selectedDungeon.monsterEncounterHandler(
+        encounters,
+        boss
+      );
+
       this.setState({
-        monster: oldDefenderState,
-        combatLog: updatedCombatLog,
-        playerTurn: false
+        playerTurn: true,
+        monster: {
+          name: setMonster.name,
+          class: setMonster.class,
+          health: setMonster.health,
+          attack: setMonster.attack,
+          attackType: setMonster.attackType,
+          defense: setMonster.defense,
+          defenseType: setMonster.defenseType,
+          portrait: setMonster.portrait,
+          ability: setMonster.ability
+        }
       });
     }
   };
 
-  monCombatHandler = (attacker, defender, damageCalc, attackerAbility) => {
-    let oldDefenderState = defender;
-    let activeAbility = attackerAbility;
-    let attackerAttack = attacker.attack;
-    let defenderDef = defender.defense;
-    let defenderDefType = defender.defenseType;
-    let defenderCurrentHealth = defender.health;
-    let combatLogCopy = [...this.state.combatLog];
-    let updatedCombatLog = "";
-    let combatLogText = "";
-
-    var trueDamage = damageCalc(
-      activeAbility,
-      defenderDefType,
-      attackerAttack,
-      defenderDef
+  charCombatHandler = (ability, attacker, defender) => {
+    var updatedCombatLog = [...this.state.combatLog];
+    var abilityActionObject = abilityActionHelper.abilityActionObject(
+      ability,
+      attacker,
+      defender
     );
+    updatedCombatLog.push(abilityActionObject.abilityCombatLog);
+    switch (ability.type) {
+      case "damage":
+        if (abilityActionObject.updatedDefender.health <= 0) {
+          console.log(abilityActionObject.updatedDefender);
+          if (this.state.monster.boss) {
+            this.dungeonClearedHandler();
+            var monsterDeathLog =
+              "You defeated " +
+              defender.name +
+              " and have cleared The Dark Forest! The guild will be pleased... very pleased.";
+            updatedCombatLog.push(monsterDeathLog);
+            return this.setState({
+              monster: abilityActionObject.updatedDefender,
+              combatLog: updatedCombatLog,
+              playerTurn: false,
+              combatInitiated: false,
+              abilitiesActive: false,
+              dungeonInitiated: false
+            });
+          } else {
+            var monsterDeathLog = "You defeated " + defender.name;
+            updatedCombatLog.push(monsterDeathLog);
+            return this.setState({
+              monster: abilityActionObject.updatedDefender,
+              combatLog: updatedCombatLog,
+              playerTurn: false,
+              combatInitiated: false,
+              abilitiesActive: false
+            });
+          }
+        } else {
+          return this.setState({
+            monster: abilityActionObject.updatedDefender,
+            combatLog: updatedCombatLog,
+            playerTurn: false,
+            abilitiesActive: false
+          });
+        }
+        break;
+      case "heal":
+        if (abilityActionObject.updatedCharacter.player) {
+          return this.setState({
+            character: abilityActionObject.updatedCharacter,
+            combatLog: updatedCombatLog,
+            playerTurn: false,
+            abilitiesActive: false
+          });
+        } else {
+          return this.setState({
+            monster: abilityActionObject.updatedCharacter,
+            combatLog: updatedCombatLog,
+            playerTurn: true,
+            abilitiesActive: true
+          });
+          break;
+        }
+      default:
+        alert("error...");
+    }
+  };
 
-    combatLogText =
-      attacker.name +
-      " used " +
-      activeAbility.abilityName +
-      " and did " +
-      trueDamage +
-      " damage to " +
-      defender.name +
-      "!";
-    combatLogText.toString();
-    defenderCurrentHealth = defenderCurrentHealth - trueDamage;
-    oldDefenderState.health = defenderCurrentHealth;
+  monsterCombatHandler = (ability, attacker, defender) => {
+    switch (ability.type) {
+      case "damage":
+        var updatedCombatLog = [...this.state.combatLog];
+        var abilityActionObject = abilityActionHelper.abilityActionObject(
+          ability,
+          attacker,
+          defender
+        );
+        updatedCombatLog.push(abilityActionObject.abilityCombatLog);
 
-    combatLogCopy.push(combatLogText);
+        if (abilityActionObject.updatedDefender.health <= 0) {
+          window.location.reload();
+        } else {
+          console.log(updatedCombatLog);
 
-    updatedCombatLog = combatLogCopy;
-
-    if (defenderCurrentHealth <= 0) {
-      window.location.reload();
-    } else {
-      this.setState({
-        character: oldDefenderState,
-        combatLog: updatedCombatLog,
-        playerTurn: true
-      });
+          return this.setState({
+            character: abilityActionObject.updatedDefender,
+            combatLog: updatedCombatLog,
+            playerTurn: true,
+            combatInitiated: true
+          });
+        }
+        break;
+      default:
+        alert("uh oh");
     }
   };
 
   render() {
-    if (!this.state.playerTurn) {
-      var attacker = this.state.monster;
-      var defender = this.state.character;
-      var damageCalc = this.damageCalculator;
-      var attackerAbility = this.state.monster.ability[0].trueAbility;
-      this.monCombatHandler(attacker, defender, damageCalc, attackerAbility);
+    if (
+      !this.state.playerTurn &&
+      this.state.combatInitiated &&
+      this.state.dungeonInitiated
+    ) {
+      setTimeout(() => {
+        var attacker = this.state.monster;
+        var defender = this.state.character;
+        var attackerAbility = this.state.monster.ability[0].trueAbility;
+        this.monsterCombatHandler(attackerAbility, attacker, defender);
+
+        this.setState({
+          abilitiesActive: true
+        });
+      }, 1000);
     }
+
     return (
       <>
         <Modal gameStarted={this.state.gameInitiated}>
@@ -298,12 +282,13 @@ class DungeonOculus extends Component {
           dungeonSetup={this.dungeonSetupHandler}
           combatLogArray={this.state.combatLog}
           darkForest={dungeons.darkForest}
-          darkForestMonsters={DungeonMonsters.darkForestMonsters}
+          darkForestMonsters={DungeonMonsters.darkForestEncounters}
           dungeonEntered={this.dungeonEnteredHandler}
           combatInitiated={this.combatInitiatedHandler}
           combatOngoing={this.state.combatInitiated}
           dungeonInitiated={this.state.dungeonInitiated}
           abilitiesActive={this.abilitiesActiveHandler}
+          forestCleared={this.state.forbiddenForestCleared}
         />
 
         <CharacterUi
@@ -313,6 +298,7 @@ class DungeonOculus extends Component {
           monster={this.state.monster}
           abilitiesActive={this.state.abilitiesActive}
           healHandler={this.healingCalculator}
+          charCombatHandler={this.charCombatHandler}
         />
       </>
     );

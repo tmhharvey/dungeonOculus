@@ -2,11 +2,11 @@ import React from "react";
 import "./CombatLog.scss";
 
 const combatLog = props => {
-  if (props.combatLogArray.length >= 10) {
-    props.combatLogArray.splice(0, 2);
+  if (props.combatLogArray.length >= 8) {
+    props.combatLogArray.splice(0, 3);
   }
   let updatedLogs = props.combatLogArray.map((logs, index) => {
-    return <p key={logs + index}>{logs}</p>;
+    return <span key={logs + index}>{logs}</span>;
   });
 
   return (

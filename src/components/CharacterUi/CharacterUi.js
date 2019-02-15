@@ -4,11 +4,7 @@ import Portrait from "./Portrait/Portrait";
 import Stats from "./Stats/Stats";
 import Abilities from "./Abilities/Abilities";
 import knightPortrait from "../../assets/images/knight.png";
-import AbilityCreation from "./Abilities/abilityHelpers";
 import Dungeon from "../Dungeon/Dungeon";
-
-var Strike = new AbilityCreation("Strike", "tooltip", 5, "Physical");
-var Fireball = new AbilityCreation("Fireball", "tooltip", 8, "Magic");
 
 class CharacterUi extends Component {
   state = {
@@ -39,8 +35,7 @@ class CharacterUi extends Component {
           <Abilities
             abilityArray={this.props.character.ability}
             character={this.props.character}
-            combat={this.props.combatHandler}
-            damageCalc={this.props.damageCalculator}
+            charCombatHandler={this.props.charCombatHandler}
             monster={this.props.monster}
             disabled={!this.props.abilitiesActive}
             playerTurn={this.props.playerTurn}

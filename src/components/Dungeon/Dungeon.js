@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import "./Dungeon.scss";
 import Topbar from "./Topbar/Topbar";
-// import CharacterUi from "../CharacterUi/CharacterUi";
 import Stats from "./Stats/Stats";
 import BattleLayout from "./BattleLayout/BattleLayout";
 import Combat from "../Combat/Combat";
@@ -30,6 +29,7 @@ class Dungeon extends Component {
             combatOngoing={this.props.combatOngoing}
             dungeonInitiated={this.props.dungeonInitiated}
             abilitiesActive={this.props.abilitiesActive}
+            forestCleared={this.props.forestCleared}
           />
 
           <Stats monster={this.props.monster} />
