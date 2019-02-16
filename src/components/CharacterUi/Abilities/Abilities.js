@@ -1,7 +1,7 @@
 import React from "react";
 import "./Abilities.scss";
 import Strike from "../../../assets/images/Strike.png";
-import Fireball from "../../../assets/images/Fireball.png";
+import EnchantedStrike from "../../../assets/images/EnchantedStrike.PNG";
 import Heal from "../../../assets/images/HealingTransparent.png";
 
 const abilities = props => {
@@ -12,8 +12,8 @@ const abilities = props => {
       case "Strike":
         abilityImageArray.push(Strike);
         break;
-      case "Fireball":
-        abilityImageArray.push(Fireball);
+      case "EnchantedStrike":
+        abilityImageArray.push(EnchantedStrike);
         break;
       case "Heal":
         abilityImageArray.push(Heal);

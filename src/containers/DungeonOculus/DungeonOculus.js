@@ -14,9 +14,33 @@ import Modal from "../../components/UI/Modal/Modal";
 import abilityActionHelper from "./helpers/abilityActionHelpers";
 import AbilityHelpers from "./helpers/abilities/abilityHelpers";
 
-var Strike = new AbilityHelpers("Strike", "damage", "tooltip", 3, "Physical");
-var Fireball = new AbilityHelpers("Fireball", "damage", "tooltip", 5, "Magic");
-var Heal = new AbilityHelpers("Heal Potion", "heal", "tooltip", 0, "Magic", 7);
+var Strike = new AbilityHelpers(
+  "Strike",
+  "damage",
+  "tooltip",
+  3,
+  "Physical",
+  0,
+  0
+);
+var EnchantedStrike = new AbilityHelpers(
+  "Enchanted Strike",
+  "damage",
+  "tooltip",
+  5,
+  "Magic",
+  0,
+  5
+);
+var Heal = new AbilityHelpers(
+  "Heal Potion",
+  "heal",
+  "tooltip",
+  0,
+  "Magic",
+  0,
+  3
+);
 
 console.log(Strike);
 
@@ -26,8 +50,8 @@ class DungeonOculus extends Component {
       player: true,
       name: "Larothion",
       class: "Knight",
-      health: 25,
-      maxHealth: 25,
+      health: 30,
+      maxHealth: 30,
       attack: 3,
       attackType: "Physical",
       defense: 4,
@@ -41,6 +65,10 @@ class DungeonOculus extends Component {
         {
           trueAbility: Heal,
           abilityImage: "Heal"
+        },
+        {
+          trueAbility: EnchantedStrike,
+          abilityImage: "EnchantedStrike"
         }
       ]
     },
