@@ -19,7 +19,6 @@ class DungeonHelpers {
       let selectedIndex = Math.floor(Math.random() * encounters.length);
       let selectedMonster = encounters[selectedIndex];
       encounters.splice(selectedIndex, 1);
-      console.log(encounters);
 
       return selectedMonster;
     }

@@ -21,7 +21,8 @@ var Strike = new AbilityHelpers(
   3,
   "Physical",
   0,
-  0
+  0,
+  false
 );
 var EnchantedStrike = new AbilityHelpers(
   "Enchanted Strike",
@@ -30,7 +31,9 @@ var EnchantedStrike = new AbilityHelpers(
   5,
   "Magic",
   0,
-  5
+  0,
+  5,
+  false
 );
 var Heal = new AbilityHelpers(
   "Heal Potion",
@@ -40,7 +43,8 @@ var Heal = new AbilityHelpers(
   "Magic",
   7,
   0,
-  3
+  2,
+  false
 );
 
 console.log(Strike);
@@ -51,7 +55,7 @@ class DungeonOculus extends Component {
       player: true,
       name: "Larothion",
       class: "Knight",
-      health: 30,
+      health: 300,
       maxHealth: 30,
       attack: 3,
       attackType: "Physical",
@@ -91,7 +95,7 @@ class DungeonOculus extends Component {
       ]
     },
     combatLog: ["Combat Has Not Initiated..."],
-    gameInitiated: false,
+    gameInitiated: true,
     dungeonInitiated: false,
     abilitiesActive: false,
     combatInitiated: false,
@@ -129,6 +133,58 @@ class DungeonOculus extends Component {
     });
   };
 
+  // abilityCooldownHandler = abilityState => {
+  //   var newAbilityState = !abilityState;
+  //   let updatedCharacter = { ...this.state.character };
+  //   updatedCharacter.ability[1].trueAbility.abilityDisabled = newAbilityState;
+
+  //   this.setState({
+  //     character: updatedCharacter
+  //   });
+  // };
+
+  abilitiesCooldownHandler = () => {
+    // when a character uses an ability, that abilties 'cooldown' is activated,
+    //as long as the cooldownCounter is > 0, the ability must be disabled and can not be used,
+    //every time a combatTurn happens, the counter is reduced by 1,
+    // //once the ability's cooldown hits 0, the ability cool down is reset
+    // let abilitySetCooldown = ability.setCooldown;
+    let updatedCharacter = { ...this.state.character };
+    let currentCooldown =
+      updatedCharacter.ability[1].trueAbility.cooldownCounter;
+    let defaultCooldown = updatedCharacter.ability[1].trueAbility.setCooldown;
+    let abilityDisabled =
+      updatedCharacter.ability[1].trueAbility.abilityDisabled;
+
+    if (currentCooldown <= 0) {
+      abilityDisabled = updatedCharacter.ability[1].trueAbility.abilityDisabled;
+
+      updatedCharacter.ability[1].trueAbility.cooldownCounter =
+        defaultCooldown + 1;
+
+      this.setState(
+        {
+          character: updatedCharacter
+        },
+        () => {
+          updatedCharacter.ability[1].trueAbility.abilityDisabled = !abilityDisabled;
+          console.log("ability should be off cooldown");
+          this.setState({
+            character: updatedCharacter
+          });
+        }
+      );
+    } else if (currentCooldown >= 1) {
+      abilityDisabled = updatedCharacter.ability[1].trueAbility.abilityDisabled;
+      console.log("ability should be on cooldown");
+      updatedCharacter.ability[1].trueAbility.cooldownCounter =
+        currentCooldown - 1;
+
+      this.setState({
+        character: updatedCharacter
+      });
+    }
+  };
   dungeonSetupHandler = (selectedDungeon, dungeonEncounters) => {
     let encounters = dungeonEncounters.monsters;
     let boss = dungeonEncounters.boss;
@@ -260,8 +316,6 @@ class DungeonOculus extends Component {
         if (abilityActionObject.updatedDefender.health <= 0) {
           window.location.reload();
         } else {
-          console.log(updatedCombatLog);
-
           return this.setState({
             character: abilityActionObject.updatedDefender,
             combatLog: updatedCombatLog,
@@ -324,6 +378,7 @@ class DungeonOculus extends Component {
           abilitiesActive={this.state.abilitiesActive}
           healHandler={this.healingCalculator}
           charCombatHandler={this.charCombatHandler}
+          abilitiesCooldownHandler={this.abilitiesCooldownHandler}
         />
       </>
     );

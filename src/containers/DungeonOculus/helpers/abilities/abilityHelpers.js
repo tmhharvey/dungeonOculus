@@ -7,7 +7,8 @@ class AbilityCreation {
     AttackType,
     healAmount,
     cooldownCounter,
-    setCooldown
+    setCooldown,
+    abilityDisabled
   ) {
     this.abilityName = abilityName;
     this.type = type;

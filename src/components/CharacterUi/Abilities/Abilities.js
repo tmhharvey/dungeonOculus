@@ -28,20 +28,29 @@ const abilities = props => {
       <div className="col-sm-3" key={ability.abilityImage}>
         <button
           className="abilitySection__slots"
-          disabled={props.disabled}
+          disabled={props.disabled || ability.trueAbility.abilityDisabled}
           onClick={() => {
             props.charCombatHandler(
               props.abilityArray[index].trueAbility,
               props.character,
               props.monster
             );
+            props.abilitiesCooldownHandler();
             // props.healHandler(
             //   props.abilityArray[index].trueAbility,
             //   props.character
             // );
           }}
         >
-          {" "}
+          {props.disabled || ability.trueAbility.abilityDisabled ? (
+            <p className="abilitySection__slots--cooldown">
+              {"Cooldown: " +
+                props.abilityArray[index].trueAbility.cooldownCounter}
+            </p>
+          ) : (
+            " "
+          )}
+
           <img src={abilityImageArray[index]} className="" alt="ability" />
         </button>
       </div>
