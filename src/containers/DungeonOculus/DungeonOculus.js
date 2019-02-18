@@ -38,6 +38,7 @@ var Heal = new AbilityHelpers(
   "tooltip",
   0,
   "Magic",
+  7,
   0,
   3
 );
