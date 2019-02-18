@@ -32,4 +32,22 @@
       margin-right: 0.75rem;
     }
   }
+
+  @media (max-width: 1600px) {
+    &__items {
+      font-size: 1.4rem;
+    }
+  }
+
+  @media (max-width: 1200px) {
+    &__items {
+      font-size: 1.2rem;
+    }
+  }
+
+  @media (max-width: 1050px) {
+    &__items {
+      font-size: 1.1rem;
+    }
+  }
 }
