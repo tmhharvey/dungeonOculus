@@ -2,6 +2,7 @@ import AbilityHelpers from "../abilities/abilityHelpers";
 import lizardPortrait from "../../../../assets/images/lizardMonster.jpg";
 import pantherPortrait from "../../../../assets/images/blacktooth.PNG";
 import corruptedAncientOne from "../../../../assets/images/corruptedAncientOne.jpg";
+import corruptedForestCreature from "../../../../assets/images/corruptedForestCreature.jpg";
 import DungeonHelpers from "./dungeonHelpers";
 import BossTheme from "../../../../assets/audio/bossTheme.mp3";
 
@@ -15,10 +16,10 @@ var DungeonMonsters = {
       {
         name: "Measle",
         class: "Scavenger",
-        health: 17,
+        health: 20,
         attack: 7,
         attackType: "Physical",
-        defense: 3,
+        defense: 1,
         defenseType: "Light",
         portrait: lizardPortrait,
         ability: [
@@ -29,10 +30,26 @@ var DungeonMonsters = {
         ]
       },
       {
+        name: "Corrupted Forest Creature",
+        class: "Forest Creature",
+        health: 30,
+        attack: 4,
+        attackType: "Piercing",
+        defense: 3,
+        defenseType: "Light",
+        portrait: corruptedForestCreature,
+        ability: [
+          {
+            trueAbility: Strike,
+            abilityImage: "Strike"
+          }
+        ]
+      },
+      {
         name: "Ol' Blacktooth",
         class: "Forest Creature",
-        health: 24,
-        attack: 3,
+        health: 22,
+        attack: 5,
         attackType: "Piercing",
         defense: 2,
         defenseType: "Light",

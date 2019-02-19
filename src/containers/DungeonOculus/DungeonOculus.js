@@ -77,7 +77,7 @@ class DungeonOculus extends Component {
       maxHealth: 30,
       attack: 3,
       attackType: "Physical",
-      defense: 4,
+      defense: 2,
       defenseType: "Heavy",
       portrait: knightPortrait,
       ability: [
@@ -106,7 +106,7 @@ class DungeonOculus extends Component {
         maxHealth: 30,
         attack: 3,
         attackType: "Physical",
-        defense: 4,
+        defense: 2,
         defenseType: "Heavy",
         portrait: knightPortrait,
         ability: [
