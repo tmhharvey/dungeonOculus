@@ -38,13 +38,13 @@ const abilities = props => {
     const html = "<div>Example HTML string</div>";
     return (
       <div className="col-sm-3" key={ability.abilityImage}>
-        <div
+        {/* <div
           className="abilitySection__tooltip"
           style={{
-            display:
+            pointerEvents:
               props.disabled || ability.trueAbility.abilityDisabled
-                ? "none"
-                : null
+                ? "none !important"
+                : "visible !important"
           }}
         >
           <ReactTooltip
@@ -56,7 +56,7 @@ const abilities = props => {
             {" "}
             <span>{ReactHtmlParser(abilityToolTipParsed)}</span>
           </ReactTooltip>
-        </div>
+        </div> */}
         <button
           data-tip
           data-for={"ability" + ability.trueAbility.abilityName}
