@@ -48,6 +48,18 @@ var Heal = new AbilityHelpers(
   false
 );
 
+var ShieldBlock = new AbilityHelpers(
+  "Shield Block",
+  "status",
+  "tooltip",
+  1,
+  "Physical",
+  0,
+  0,
+  5,
+  false
+);
+
 console.log(Strike);
 
 class DungeonOculus extends Component {
@@ -73,10 +85,44 @@ class DungeonOculus extends Component {
           abilityImage: "Heal"
         },
         {
+          trueAbility: ShieldBlock,
+          abilityImage: "ShieldBlock"
+        },
+        {
           trueAbility: EnchantedStrike,
           abilityImage: "EnchantedStrike"
         }
-      ]
+      ],
+      defaultChar: {
+        player: true,
+        name: "Larothion",
+        class: "Knight",
+        health: 30,
+        maxHealth: 30,
+        attack: 3,
+        attackType: "Physical",
+        defense: 4,
+        defenseType: "Heavy",
+        portrait: knightPortrait,
+        ability: [
+          {
+            trueAbility: Strike,
+            abilityImage: "Strike"
+          },
+          {
+            trueAbility: Heal,
+            abilityImage: "Heal"
+          },
+          {
+            trueAbility: ShieldBlock,
+            abilityImage: "ShieldBlock"
+          },
+          {
+            trueAbility: EnchantedStrike,
+            abilityImage: "EnchantedStrike"
+          }
+        ]
+      }
     },
     monster: {
       player: false,
@@ -271,33 +317,63 @@ class DungeonOculus extends Component {
             });
           }
         } else {
-          return this.setState({
-            monster: abilityActionObject.updatedDefender,
-            combatLog: updatedCombatLog,
-            playerTurn: false,
-            abilitiesActive: false
-          });
+          return this.setState(
+            {
+              monster: abilityActionObject.updatedDefender,
+              combatLog: updatedCombatLog,
+              playerTurn: false,
+              abilitiesActive: false
+            },
+            () => {
+              this.monsterTurnCheck();
+            }
+          );
         }
         break;
       case "heal":
         if (abilityActionObject.updatedCharacter.player) {
-          console.log("The character healed");
-          return this.setState({
-            character: abilityActionObject.updatedCharacter,
-            combatLog: updatedCombatLog,
-            playerTurn: false,
-            abilitiesActive: false
-          });
+          return this.setState(
+            {
+              character: abilityActionObject.updatedCharacter,
+              combatLog: updatedCombatLog,
+              playerTurn: false,
+              abilitiesActive: false
+            },
+            () => {
+              this.monsterTurnCheck();
+            }
+          );
         } else {
-          console.log("The monster healed");
           return this.setState({
             monster: abilityActionObject.updatedCharacter,
             combatLog: updatedCombatLog,
             playerTurn: true,
             abilitiesActive: true
           });
-          break;
         }
+        break;
+      case "status":
+        if (abilityActionObject.updatedCharacter.player) {
+          return this.setState(
+            {
+              character: abilityActionObject.updatedCharacter,
+              combatLog: updatedCombatLog,
+              playerTurn: false,
+              abilitiesActive: false
+            },
+            () => {
+              this.monsterTurnCheck();
+            }
+          );
+        } else {
+          return this.setState({
+            monster: abilityActionObject.updatedCharacter,
+            combatLog: updatedCombatLog,
+            playerTurn: true,
+            abilitiesActive: true
+          });
+        }
+        break;
       default:
         alert("error...");
     }
@@ -330,7 +406,7 @@ class DungeonOculus extends Component {
     }
   };
 
-  render() {
+  monsterTurnCheck = () => {
     if (
       !this.state.playerTurn &&
       this.state.combatInitiated &&
@@ -347,7 +423,9 @@ class DungeonOculus extends Component {
         });
       }, 1000);
     }
+  };
 
+  render() {
     return (
       <>
         <Modal gameStarted={this.state.gameInitiated}>

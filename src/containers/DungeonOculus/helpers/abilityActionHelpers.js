@@ -1,5 +1,6 @@
 import damageHelper from "./combat/damageHelpers";
 import healHelper from "./combat/healingHelpers";
+import statusHelpers from "./combat/statusHelpers";
 
 var abilityActionHelper = {
   abilityActionObject: (ability, characterOne, characterTwo) => {
@@ -16,6 +17,15 @@ var abilityActionHelper = {
         break;
       case "heal":
         var abilityActionObject = healHelper.healingAbilityHandler(
+          ability,
+          characterOne
+        );
+        return abilityActionObject;
+
+        break;
+
+      case "status":
+        var abilityActionObject = statusHelpers.statusAbilityHelper(
           ability,
           characterOne
         );

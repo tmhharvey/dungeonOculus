@@ -96,6 +96,10 @@ var damageHelpers = {
 
     var actualDamage = totalDamage - defenderDefense;
 
+    if (actualDamage < 0) {
+      actualDamage = 0;
+    }
+
     return Math.floor(actualDamage);
   },
   useAbility: (charAbility, defenderDefType) => {

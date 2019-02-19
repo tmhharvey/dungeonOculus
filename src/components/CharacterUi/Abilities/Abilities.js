@@ -3,6 +3,7 @@ import "./Abilities.scss";
 import Strike from "../../../assets/images/Strike.png";
 import EnchantedStrike from "../../../assets/images/EnchantedStrike.PNG";
 import Heal from "../../../assets/images/HealingTransparent.png";
+import ShieldBlock from "../../../assets/images/shieldTransparent.png";
 
 const abilities = props => {
   let abilityImageArray = [];
@@ -17,6 +18,10 @@ const abilities = props => {
         break;
       case "Heal":
         abilityImageArray.push(Heal);
+        break;
+
+      case "ShieldBlock":
+        abilityImageArray.push(ShieldBlock);
         break;
 
       default:

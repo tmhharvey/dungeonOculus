@@ -49,7 +49,7 @@ var DungeonMonsters = {
       class: "Forest Spirit",
       boss: true,
       health: 40,
-      attack: 6,
+      attack: 9,
       attackType: "Physical",
       defense: 4,
       defenseType: "Light",
