@@ -71,7 +71,7 @@ class DungeonOculus extends Component {
   state = {
     character: {
       player: true,
-      name: "Larothion",
+      name: "Sir Harvey",
       class: "Knight",
       health: 30,
       maxHealth: 30,
