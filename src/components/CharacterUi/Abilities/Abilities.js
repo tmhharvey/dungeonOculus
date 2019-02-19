@@ -29,13 +29,18 @@ const abilities = props => {
         <button
           className="abilitySection__slots"
           disabled={props.disabled || ability.trueAbility.abilityDisabled}
+          abilityCooldownHandler={props.abilityCooldownHandler(
+            ability.trueAbility,
+            index
+          )}
           onClick={() => {
             props.charCombatHandler(
               props.abilityArray[index].trueAbility,
               props.character,
               props.monster
             );
-            props.abilitiesCooldownHandler();
+            props.cooldownCounterController(index);
+
             // props.healHandler(
             //   props.abilityArray[index].trueAbility,
             //   props.character

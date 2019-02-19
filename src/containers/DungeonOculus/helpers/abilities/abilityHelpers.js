@@ -18,6 +18,7 @@ class AbilityCreation {
     this.healAmount = healAmount;
     this.cooldownCounter = cooldownCounter;
     this.setCooldown = setCooldown;
+    this.abilityDisabled = abilityDisabled;
   }
 }
 

@@ -29,11 +29,6 @@ var healingHelpers = {
     };
 
     return abilityActionObject;
-
-    // when a character uses an ability, that abilties 'cooldown' is activated,
-    //as long as the cooldownCounter is < 0, the ability must be disabled and can not be used,
-    //every time a combatTurn happens, the counter is reduced by 1,
-    //once the ability's cooldown hits 0, the ability cool down is reset
   },
   totalHealingCalc: (originalHealth, healingPower, healer) => {
     var updatedHealth = originalHealth + healingPower;
