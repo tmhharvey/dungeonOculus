@@ -22,7 +22,7 @@ var bossSong = new Audio(BossTheme);
 var Strike = new AbilityHelpers(
   "Strike",
   "damage",
-  "tooltip",
+  "You swing in a downward arc with your sword, dealing 3 base damage! <br/> Damage Type: <strong>Physical </strong>. <br/> Cooldown: <strong>none</strong>",
   3,
   "Physical",
   0,
@@ -33,7 +33,7 @@ var Strike = new AbilityHelpers(
 var EnchantedStrike = new AbilityHelpers(
   "Enchanted Strike",
   "damage",
-  "tooltip",
+  "You magically enchant your sword and then swing in an upward arc, dealing 7 base damage! <br/>Damage Type: <strong>Magic </strong> <br/> Cooldown: <strong>4</strong>",
   7,
   "Magic",
   0,
@@ -44,7 +44,7 @@ var EnchantedStrike = new AbilityHelpers(
 var Heal = new AbilityHelpers(
   "Heal Potion",
   "heal",
-  "tooltip",
+  "You quickly pop open and drink one of your health potions, healing you for 14. <br/> Cooldown: <strong> 2 Turns</strong>",
   0,
   "Magic",
   14,
@@ -56,9 +56,9 @@ var Heal = new AbilityHelpers(
 var ShieldBlock = new AbilityHelpers(
   "Shield Block",
   "status",
-  "tooltip",
+  "You magically enchant your shield, permanently increasing your defense by + 1. <br/> <strong>Cooldown: 5 Turns</strong>",
   1,
-  "Physical",
+  "Magic",
   0,
   0,
   5,
@@ -148,7 +148,7 @@ class DungeonOculus extends Component {
     },
     combatLog: ["Combat Has Not Initiated..."],
     characterAlive: true,
-    gameInitiated: false,
+    gameInitiated: true,
     dungeonInitiated: false,
     abilitiesActive: false,
     combatInitiated: false,

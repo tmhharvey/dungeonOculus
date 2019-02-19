@@ -16,6 +16,12 @@
     color: white;
   }
 
+  &__tooltip {
+    & span {
+      width: 10px;
+    }
+  }
+
   &__slots {
     height: 7.5rem;
     width: 7.5rem;

@@ -46,6 +46,8 @@
     "react-app-polyfill": "^0.2.0",
     "react-dev-utils": "^7.0.1",
     "react-dom": "^16.7.0",
+    "react-html-parser": "^2.0.2",
+    "react-tooltip": "^3.9.2",
     "resolve": "1.8.1",
     "rpg-awesome": "^0.2.0",
     "sass-loader": "7.1.0",

@@ -4,11 +4,18 @@ import Strike from "../../../assets/images/Strike.png";
 import EnchantedStrike from "../../../assets/images/EnchantedStrike.PNG";
 import Heal from "../../../assets/images/HealingTransparent.png";
 import ShieldBlock from "../../../assets/images/shieldTransparent.png";
+import ReactTooltip from "react-tooltip";
+import ReactHtmlParser, {
+  processNodes,
+  convertNodeToElement,
+  htmlparser2
+} from "react-html-parser";
 
 const abilities = props => {
   let abilityImageArray = [];
 
   let currentAbilities = props.abilityArray.map((ability, index) => {
+    const abilityToolTipParsed = ability.trueAbility.tooltip;
     switch (ability.abilityImage) {
       case "Strike":
         abilityImageArray.push(Strike);
@@ -28,10 +35,31 @@ const abilities = props => {
         abilityImageArray.push("");
         break;
     }
-
+    const html = "<div>Example HTML string</div>";
     return (
       <div className="col-sm-3" key={ability.abilityImage}>
+        <div
+          className="abilitySection__tooltip"
+          style={{
+            display:
+              props.disabled || ability.trueAbility.abilityDisabled
+                ? "none"
+                : null
+          }}
+        >
+          <ReactTooltip
+            id={"ability" + ability.trueAbility.abilityName}
+            place="top"
+            type="error"
+            effect="solid"
+          >
+            {" "}
+            <span>{ReactHtmlParser(abilityToolTipParsed)}</span>
+          </ReactTooltip>
+        </div>
         <button
+          data-tip
+          data-for={"ability" + ability.trueAbility.abilityName}
           className="abilitySection__slots"
           disabled={props.disabled || ability.trueAbility.abilityDisabled}
           abilityCooldownHandler={props.abilityCooldownHandler(
