@@ -3,6 +3,7 @@ import lizardPortrait from "../../../../assets/images/lizardMonster.jpg";
 import pantherPortrait from "../../../../assets/images/blacktooth.PNG";
 import corruptedAncientOne from "../../../../assets/images/corruptedAncientOne.jpg";
 import DungeonHelpers from "./dungeonHelpers";
+import BossTheme from "../../../../assets/audio/bossTheme.mp3";
 
 var Strike = new AbilityHelpers("Strike", "damage", "tooltip", 3, "Physical");
 var Fireball = new AbilityHelpers("Fireball", "damage", "tooltip", 5, "Magic");
@@ -54,6 +55,7 @@ var DungeonMonsters = {
       defense: 4,
       defenseType: "Light",
       portrait: corruptedAncientOne,
+      audio: BossTheme,
       ability: [
         {
           trueAbility: Strike,

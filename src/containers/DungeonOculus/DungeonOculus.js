@@ -10,10 +10,15 @@ import lizardPortrait from "../../assets/images/lizardMonster.jpg";
 import banditPortrait from "../../assets/images/bandit.png";
 import dungeons from "./helpers/dungeon/dungeons";
 import Introduction from "../../components/CharacterUi/Introduction/Introduction";
+import YouDied from "../../components/CharacterUi/YouDied/YouDied";
 import Modal from "../../components/UI/Modal/Modal";
 import abilityActionHelper from "./helpers/abilityActionHelpers";
 import AbilityHelpers from "./helpers/abilities/abilityHelpers";
+import BossTheme from "../../assets/audio/bossTheme.mp3";
+import DarkSoulsDead from "../../assets/audio/DarkSoulsDead.mp3";
 
+var darkSoulsDeath = new Audio(DarkSoulsDead);
+var bossSong = new Audio(BossTheme);
 var Strike = new AbilityHelpers(
   "Strike",
   "damage",
@@ -142,7 +147,8 @@ class DungeonOculus extends Component {
       ]
     },
     combatLog: ["Combat Has Not Initiated..."],
-    gameInitiated: true,
+    characterAlive: true,
+    gameInitiated: false,
     dungeonInitiated: false,
     abilitiesActive: false,
     combatInitiated: false,
@@ -155,7 +161,9 @@ class DungeonOculus extends Component {
       gameInitiated: true
     });
   };
-
+  restartGameHandler = () => {
+    window.location.reload();
+  };
   dungeonEnteredHandler = () => {
     this.setState({
       dungeonInitiated: true
@@ -178,6 +186,18 @@ class DungeonOculus extends Component {
     this.setState({
       abilitiesActive: true
     });
+  };
+
+  PlaySound = audio => {
+    audio.loop = false;
+    audio.volume = 0.3;
+
+    audio.play();
+  };
+
+  StopSound = audio => {
+    audio.pause();
+    audio.currentTime = 0;
   };
 
   abilityCooldownHandler = (ability, index) => {
@@ -236,7 +256,7 @@ class DungeonOculus extends Component {
     if (encounters.length <= 0) {
       let currentCombatLog = [...this.state.combatLog];
       let bossMessage = "You hear something behind you... Watch out!";
-
+      this.PlaySound(bossSong);
       currentCombatLog.push(bossMessage);
 
       this.setState({
@@ -292,6 +312,7 @@ class DungeonOculus extends Component {
           console.log(abilityActionObject.updatedDefender);
           if (this.state.monster.boss) {
             this.dungeonClearedHandler();
+            this.StopSound(bossSong);
             var monsterDeathLog =
               "You defeated " +
               defender.name +
@@ -391,7 +412,11 @@ class DungeonOculus extends Component {
         updatedCombatLog.push(abilityActionObject.abilityCombatLog);
 
         if (abilityActionObject.updatedDefender.health <= 0) {
-          window.location.reload();
+          this.StopSound(bossSong);
+          this.PlaySound(darkSoulsDeath);
+          return this.setState({
+            characterAlive: false
+          });
         } else {
           return this.setState({
             character: abilityActionObject.updatedDefender,
@@ -428,8 +453,11 @@ class DungeonOculus extends Component {
   render() {
     return (
       <>
-        <Modal gameStarted={this.state.gameInitiated}>
+        <Modal show={this.state.gameInitiated}>
           <Introduction startGame={this.startGameHandler} />
+        </Modal>
+        <Modal show={this.state.characterAlive}>
+          <YouDied startGame={this.restartGameHandler} />
         </Modal>
         <Dungeon
           playerTurn={this.state.playerTurn}

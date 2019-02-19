@@ -4,7 +4,7 @@ import "./Introduction.scss";
 class Introduction extends Component {
   render() {
     return (
-      <div className="V">
+      <div className="gameIntroduction">
         <div className="gameIntroduction__content">
           <div className="row">
             <div className="col-md-12">
