@@ -147,7 +147,7 @@ class DungeonOculus extends Component {
     currentDungeon: "",
     combatLog: ["Combat Has Not Initiated..."],
     characterAlive: true,
-    gameInitiated: true,
+    gameInitiated: false,
     dungeonInitiated: false,
     abilitiesActive: false,
     combatInitiated: false,
