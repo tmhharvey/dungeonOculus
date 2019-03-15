@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import DungeonHelpers from "./helpers/dungeon/dungeonHelpers";
 import DungeonMonsters from "./helpers/dungeon/dungeonMonsters";
-import Dungeons from "./helpers/dungeon/dungeons";
 import Dungeon from "../../components/Dungeon/Dungeon";
 import CharacterUi from "../../components/CharacterUi/CharacterUi";
 import Combat from "../../components/Combat/Combat";
@@ -64,8 +63,6 @@ var ShieldBlock = new AbilityHelpers(
   5,
   false
 );
-
-console.log(Strike);
 
 class DungeonOculus extends Component {
   state = {
@@ -146,14 +143,21 @@ class DungeonOculus extends Component {
         }
       ]
     },
+    dungeonsArray: dungeons,
+    currentDungeon: "",
     combatLog: ["Combat Has Not Initiated..."],
     characterAlive: true,
-    gameInitiated: false,
+    gameInitiated: true,
     dungeonInitiated: false,
     abilitiesActive: false,
     combatInitiated: false,
     playerTurn: true,
-    forbiddenForestCleared: false
+    forbiddenForestActive: false,
+    forbiddenForestCleared: false,
+    banditCoveActive: false,
+    banditCoveCleared: false,
+    necroDwellActive: false,
+    necroDwellCleared: false
   };
 
   startGameHandler = () => {
@@ -164,15 +168,70 @@ class DungeonOculus extends Component {
   restartGameHandler = () => {
     window.location.reload();
   };
-  dungeonEnteredHandler = () => {
+  dungeonEnteredHandler = dungeon => {
+    let dungeonName = dungeon.dungeonCss;
+    switch (dungeonName) {
+      case "darkForest":
+        this.setState({
+          forbiddenForestActive: true,
+          currentDungeon: dungeon
+        });
+        break;
+      case "banditCove":
+        this.setState({
+          banditCoveActive: true,
+          currentDungeon: dungeon
+        });
+        break;
+      case "necroDwell":
+        this.setState({
+          necroDwellActive: true,
+          currentDungeon: dungeon
+        });
+        break;
+      default:
+      // code block
+    }
     this.setState({
       dungeonInitiated: true
     });
   };
 
-  dungeonClearedHandler = () => {
+  dungeonClearedHandler = dungeon => {
+    let dungeonName = dungeon.dungeonCss;
+    let updatedDungeonArray = this.state.dungeonsArray;
+    console.log(JSON.stringify(updatedDungeonArray));
+
+    var remainingDungeons = updatedDungeonArray.map(function(
+      dungeonElement,
+      index
+    ) {
+      if (dungeonElement.selectedDungeon.dungeonCss == dungeonName) {
+        updatedDungeonArray.splice(index, 1);
+      }
+    });
+    if (dungeonName === "darkForest") {
+      this.setState({
+        forbiddenForestCleared: true,
+        forbiddenForestActive: false,
+        dungeonInitiated: false
+      });
+    } else if (dungeonName === "banditCove") {
+      this.setState({
+        banditCoveCleared: true,
+        banditCoveActive: false,
+        dungeonInitiated: false
+      });
+    } else if (dungeonName === "necroDwell") {
+      this.setState({
+        necroDwellCleared: true,
+        necroDwellActive: false,
+        dungeonInitiated: false
+      });
+    }
+
     this.setState({
-      forbiddenForestCleared: true
+      dungeonsArray: updatedDungeonArray
     });
   };
 
@@ -250,9 +309,11 @@ class DungeonOculus extends Component {
       });
     }
   };
-  dungeonSetupHandler = (selectedDungeon, dungeonEncounters) => {
-    let encounters = dungeonEncounters.monsters;
-    let boss = dungeonEncounters.boss;
+  dungeonSetupHandler = (dungeon, dungeonEncounters) => {
+    console.log(dungeon);
+    let encounters = dungeonEncounters;
+    let boss = dungeon.dungeonBoss;
+    this.dungeonEnteredHandler(dungeon);
     if (encounters.length <= 0) {
       let currentCombatLog = [...this.state.combatLog];
       let bossMessage = "You hear something behind you... Watch out!";
@@ -276,10 +337,7 @@ class DungeonOculus extends Component {
         }
       });
     } else {
-      var setMonster = selectedDungeon.monsterEncounterHandler(
-        encounters,
-        boss
-      );
+      var setMonster = dungeon.monsterEncounterHandler(encounters, boss);
 
       this.setState({
         playerTurn: true,
@@ -309,14 +367,13 @@ class DungeonOculus extends Component {
     switch (ability.type) {
       case "damage":
         if (abilityActionObject.updatedDefender.health <= 0) {
-          console.log(abilityActionObject.updatedDefender);
           if (this.state.monster.boss) {
-            this.dungeonClearedHandler();
+            this.dungeonClearedHandler(this.state.currentDungeon);
             this.StopSound(bossSong);
             var monsterDeathLog =
               "You defeated " +
               defender.name +
-              " and have cleared The Dark Forest! The guild will be pleased... very pleased.";
+              " and have cleared the Dungeon! The guild will be pleased... very pleased.";
             updatedCombatLog.push(monsterDeathLog);
             return this.setState({
               monster: abilityActionObject.updatedDefender,
@@ -475,6 +532,12 @@ class DungeonOculus extends Component {
           dungeonInitiated={this.state.dungeonInitiated}
           abilitiesActive={this.abilitiesActiveHandler}
           forestCleared={this.state.forbiddenForestCleared}
+          forestActive={this.state.forbiddenForestActive}
+          banditCoveCleared={this.state.banditCoveCleared}
+          banditCoveActive={this.state.banditCoveActive}
+          necroActive={this.state.necroDwellActive}
+          necroCleared={this.state.necroDwellCleared}
+          dungeonsArray={this.state.dungeonsArray}
         />
 
         <CharacterUi

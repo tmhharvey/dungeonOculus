@@ -11,25 +11,23 @@ class Dungeon extends Component {
   render() {
     return (
       <>
-        <Topbar
-          monsterName={this.props.monster.name}
-          dungeonName={this.props.darkForest.dungeonName}
-        />
+        <Topbar monsterName={this.props.monster.name} />
 
         <div className="row text-center dungeonLayout">
           <BattleLayout
-            dungeonSetup={() =>
-              this.props.dungeonSetup(
-                this.props.darkForest,
-                this.props.darkForestMonsters
-              )
-            }
+            dungeonSetup={this.props.dungeonSetup}
             dungeonEntered={this.props.dungeonEntered}
             combatInitiated={this.props.combatInitiated}
             combatOngoing={this.props.combatOngoing}
             dungeonInitiated={this.props.dungeonInitiated}
             abilitiesActive={this.props.abilitiesActive}
             forestCleared={this.props.forestCleared}
+            dungeonsArray={this.props.dungeonsArray}
+            forestActive={this.props.forestActive}
+            banditCoveCleared={this.props.banditCoveCleared}
+            banditCoveActive={this.props.banditCoveActive}
+            necroActive={this.props.necroActive}
+            necroCleared={this.props.necroCleared}
           />
 
           <Stats monster={this.props.monster} />

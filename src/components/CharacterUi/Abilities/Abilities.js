@@ -35,7 +35,6 @@ const abilities = props => {
         abilityImageArray.push("");
         break;
     }
-    const html = "<div>Example HTML string</div>";
     return (
       <div className="col-sm-3" key={ability.abilityImage}>
         {/* <div

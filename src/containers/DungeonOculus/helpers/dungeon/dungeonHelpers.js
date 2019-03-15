@@ -1,14 +1,21 @@
 import dungeonMonsters from "./dungeonMonsters";
 
 class DungeonHelpers {
-  constructor(dungeonName, monstersArray, dungeonBoss, dungeonCosmetics) {
+  constructor(
+    dungeonName,
+    dungeonCss,
+    monstersArray,
+    dungeonBoss,
+    dungeonCosmetics
+  ) {
     this.dungeonName = dungeonName;
+    this.dungeonCss = dungeonCss;
     this.monstersArray = monstersArray;
     this.dungeonBoss = dungeonBoss;
     this.dungeonCosmetics = dungeonCosmetics;
   }
   monsterEncounterHandler(encounters, boss) {
-    var bossHealth = dungeonMonsters.darkForestEncounters.boss.health;
+    var bossHealth = boss.health;
     if (encounters.length <= 0) {
       if (bossHealth <= 0) {
         return true;
